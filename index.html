@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>index</title>
+<!-- write your code here -->
+<style>
+  #animation_container, #_preload_div_ {
+	position:absolute;
+	margin:auto;
+	left:0;right:0;
+	top:0;bottom:0;
+  }
+</style>
+<script src="libs/1.0.0/createjs.min.js"></script>
+<script src="index.js?1762420631573"></script>
+<script>
+// Global Scripts
+	var wrongAnswers = 0 
+var score = 0;
+var correctAns = 0;
+var limit1 = 13;
+var limit2 = 21;
+var limitAction = "";
+var allQuestions = [];
+var usedQuestions = 0
+var wrongAnswers = 0 
+var correctAns = 0
+var score = 0;
+let currentKing = null;
+var achTextMain = ""
+var achTextModal = ""
+var hintTextMain = ""
+var hintTextModal =""
+var QM = null
+var QP = null
+var HM = null
+var HP = null
+/*const kingsDataMap = {
+  k1A1: "أسست الدولة الحدّيثة",
+  k1A2: "جعلت مدينة طيبة عاصمة للبلاد",
+  k1A3: "أصلحت المعابد التي تهدّمت في زمن الهكسوس",
+  k1A4: "قمت بحملة على فينيقيا لبسط نفوذي عليها",
+  k1A5: "قمت بتأمين الحدود الجنوبية",
+  k1H1: "أسس الدولة الحدّيثة",
+  k1H2: "جعل مدينة طيبة عاصمة للبلاد",
+  k1H3: "أصلح المعابد التي تهدّمت في زمن الهكسوس",
+  k1H4: "قام بحملة على فينيقيا لبسط نفوذه عليها",
+  k1H5: "قام بتأمين الحدود الجنوبية",
+  k2A1: "ضممت مدينة نبتة لحدود مصر",
+  k2A2: "اتجهت نحو آسيا حتى وصلت إلى نهر الفرات",
+  k2A3: "عملت على تطوير معبد الكرنك",
+  k2H1: "ضم مدينة نبتة لحدود مصر",
+  k2H2: "اتجه نحو آسيا حتى وصل إلى نهر الفرات",
+  k2H3: "عمل على تطوير معبد الكرنك",
+  k3A1: "من أشهر الملكات في مصر الحديثة",
+  k3A2: "اهتممت بالسياسة والاقتصاد والثقافة والعمران",
+  k3H1: "هي من أشهر الملكات في مصر الحديثة",
+  k3H2: "اهتم بالسياسة والاقتصاد والثقافة والعمران",
+  k4A1: "قدت ستة عشر حملة عسكرية في آسيا",
+  k4A2: "من أعظم ملوك مصر في الحرب والإدارة",
+  k4A3: "أرسلت حملتي السابعة عشر على بلاد كوش",
+  k4A4: "اتبعت سياسات سلمية مع أمراء آسيا",
+  k4H1: "قاد ستة عشر حملة عسكرية في آسيا",
+  k4H2: "هو من أعظم ملوك مصر في الحرب والإدارة",
+  k4H3: "أرسل حملته السابعة عشر على بلاد كوش",
+  k4H4: "اتبع سياسات سلمية مع أمراء آسيا",
+  k5A1: "أعدت لعبادة الإله آمون مكانتها",
+  k5A2: "أعدت مدينة طيبة عاصمة للبلاد",
+  k5A3: "أصلحت المعابد المتضررة في عهد إخناتون",
+  k5A4: "بنيت إضافات معمارية لمعبدي الأقصر والكرنك",
+  k5H1: "أعد لعبادة الإله آمون مكانتها",
+  k5H2: "أعد مدينة طيبة عاصمة للبلاد",
+  k5H3: "أصلح المعابد المتضررة في عهد إخناتون",
+  k5H4: "بنى إضافات معمارية لمعبدي الأقصر والكرنك",
+  k6A1: "أكملت مباني والدي سيتى الأول، ومنها معبد أبيدوس",
+  k6A2: "سُمي عصري بعصر الإمبراطورية الثانية",
+  k6A3: "أمرت بنحت معبدين في أبو سمبل لي ولزوجتي نفرتاري",
+  k6A4: "استعدت سيادة مصر على الشام وجزر المتوسط",
+  k6H1: "أكمل مباني والده سيتى الأول، ومنها معبد أبيدوس",
+  k6H2: "سُمي عصره بعصر الإمبراطورية الثانية",
+  k6H3: "أمر بنحت معبدين في أبو سمبل له ولزوجته نفرتاري",
+  k6H4: "استعاد سيادة مصر على الشام وجزر المتوسط",
+  k7A1: "المؤسس الحقيقى للأسرة العشرين",
+  k7A2: "هزمت شعوب البحر المتوسط",
+  k7A3: "تصدّيت لليبيين على حدود مصر الغربية",
+  k7A4: "نظّمت بعثات تجارية، خاصة إلى بلاد بونت",
+  k7H1: "هو المؤسس الحقيقى للأسرة العشرين",
+  k7H2: "هزم شعوب البحر المتوسط",
+  k7H3: "تصدّى لليبيين على حدود مصر الغربية",
+  k7H4: "نظّم بعثات تجارية، خاصة إلى بلاد بونت",
+};*/
+/*const kingsData = [
+  {
+    name: "k1",
+    title: "أحمس الأول",
+    works: ["k1A1", "k1A2", "k1A3", "k1A4", "k1A5"],
+    hints: ["k1H1", "k1H2", "k1H3", "k1H4", "k1H5"],
+  },
+  {
+    name: "k2",
+    title: "تحتمس الأول",
+    works: ["k2A1", "k2A2", "k2A3"],
+    hints: ["k2H1", "k2H2", "k2H3"],
+  },
+  {
+    name: "k3",
+    title: "حتشبسوت",
+    works: ["k3A1", "k3A2"],
+    hints: ["k3H1", "k3H2"],
+  },
+  {
+    name: "k4",
+    title: "تحتمس الثالث",
+    works: ["k4A1", "k4A2", "k4A3", "k4A4"],
+    hints: ["k4H1", "k4H2", "k4H3", "k4H4"],
+  },
+  {
+    name: "k5",
+    title: "توت عنخ آمون",
+    works: ["k5A1", "k5A2", "k5A3", "k5A4"],
+    hints: ["k5H1", "k5H2", "k5H3", "k5H4"],
+  },
+  {
+    name: "k6",
+    title: "رمسيس الثاني",
+    works: ["k6A1", "k6A2", "k6A3", "k6A4"],
+    hints: ["k6H1", "k6H2", "k6H3", "k6H4"],
+  },
+  {
+    name: "k7",
+    title: "رمسيس الثالث",
+    works: ["k7A1", "k7A2", "k7A3", "k7A4"],
+    hints: ["k7H1", "k7H2", "k7H3", "k7H4"],
+  },
+];*/
+var allData = {};
+var kingsData = [];
+var kingsDataMap = {};
+var kingsDataCopy ;
+// Create a loader
+var loader = new createjs.LoadQueue();
+// Add event listeners
+loader.addEventListener("fileload", handleFileLoad);
+loader.addEventListener("complete", handleComplete);
+// Load JSON file
+loader.loadFile({
+	id: "data",
+	src: "data.json"
+});
+function handleFileLoad(e) {
+	if (e.item.id === "data") {
+		console.log("JSON loaded successfully!");
+		allData = e.result;
+	}
+}
+function handleComplete() {
+	kingsData = allData.kings;
+	kingsDataCopy = JSON.parse(JSON.stringify(kingsData));
+	kingsDataMap = allData.kingsMap;
+	dataLoaded = true;
+	console.log("JSON loaded:", kingsData);
+	console.log("first king",kingsData[0].works)
+}
+function getNewQuestion(gameStage=null) {
+  const availableKings = kingsDataCopy.filter(k => k.works.length > 0);
+  if (availableKings.length === 0) {
+    console.log("✅ انتهت كل الأسئلة!");
+    return;
+  }
+	usedQuestions++;
+	// select random king
+	currentKing = availableKings[Math.floor(Math.random() * availableKings.length)];
+	// get random Achievment code then remove it from ach. list of the king
+	var mainIndex = Math.floor(Math.random() * currentKing.works.length);
+	var achCodeMain = currentKing.works[mainIndex];
+	currentKing.works.splice(mainIndex, 1);
+	// get another random ach. code from this ach. list to represent the hint
+	const matchId = achCodeMain.replace("A", "H");
+	const hintOptions = currentKing.hints.filter(hint => hint !== matchId);
+	var hintIndex = Math.floor(Math.random() * hintOptions.length);
+	var hintCodeModal = hintOptions[hintIndex];
+   QM = achCodeMain
+   QP = achCodeMain.replace("A", "H")
+   HP = hintCodeModal
+   HM = hintCodeModal.replace("H", "A")
+	// get text of the 4 titles 
+	achTextMain = kingsDataMap[achCodeMain]
+	achTextModal = kingsDataMap[achCodeMain.replace("A", "H")]
+	hintTextMain = kingsDataMap[hintCodeModal.replace("H", "A")]
+	hintTextModal = kingsDataMap[hintCodeModal]
+	//console.log("currentking",currentKing)
+	//console.log("achCodeMain",achCodeMain)
+	//console.log("hintCodeModal",hintCodeModal)
+	console.log("hintTextMain", hintTextMain)
+}
+function countScore(gameStage){	
+    gameStage.achievmentsMC.visible = false;
+	gameStage.hintsMainMC.visible = false;
+	score = Math.ceil((correctAns/26)*100 );
+	if(correctAns > limit2){
+			limitAction="correct";
+			gameStage.gotoAndStop("correct")
+		}else if(correctAns > limit1){
+			limitAction="notgood"
+			gameStage.gotoAndStop("notgood")
+			}else if(correctAns <= limit1){
+			limitAction="wrong"
+			gameStage.gotoAndStop("wrong")
+		}	
+	reset()
+}
+function reset(){
+		wrongAnswers = 0 
+		score = 0;
+		correctAns = 0;	
+		usedQuestions = 0
+		kingsDataCopy = JSON.parse(JSON.stringify(kingsData));
+	}
+var soundsArray = []
+soundsArray.push({
+	id: "correct-answer",
+	src: "Sfx/correct-answer.mp3"
+})
+soundsArray.push({
+	id: "wrong-answer",
+	src: "Sfx/wrong-answer.mp3"
+})
+soundsArray.push({
+	id: "click",
+	src: "Sfx/click.mp3"
+})
+soundsArray.push({
+	id: "Card-Animation",
+	src: "Sfx/Card-Animation.wav"
+})
+soundsArray.push({
+	id: "Timer-fast",
+	src: "Sfx/Timer-fast.mp3"
+})
+soundsArray.push({
+	id: "Box-Animation",
+	src: "Sfx/Box-Animation.wav"
+})
+soundsArray.push({
+	id: "pop",
+	src: "Sfx/pop.mp3"
+})
+soundsArray.push({
+	id: "title",
+	src: "Sfx/title.mp3"
+})
+createjs.Sound.registerSounds(soundsArray, "");
+	function PlaySfx(id) {
+		createjs.Sound.stop();
+		createjs.Sound.play(id)
+	}
+function toArabicNumbers(num) {
+    return num.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+//////////// adding arabic font /////////////////
+// Preconnect: fonts.googleapis.com
+var link1 = document.createElement("link");
+link1.rel = "preconnect";
+link1.href = "https://fonts.googleapis.com";
+document.head.appendChild(link1);
+// Preconnect: fonts.gstatic.com (with crossorigin)
+var link2 = document.createElement("link");
+link2.rel = "preconnect";
+link2.href = "https://fonts.gstatic.com";
+link2.crossOrigin = "anonymous";
+document.head.appendChild(link2);
+// Google Fonts: Cookie + Noto Sans Arabic
+var link3 = document.createElement("link");
+link3.rel = "stylesheet";
+link3.href = "https://fonts.googleapis.com/css2?family=Cookie&family=Noto+Sans+Arabic:wght@100..900&display=swap";
+document.head.appendChild(link3);</script>
+<script>
+var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+function init() {
+	canvas = document.getElementById("canvas");
+	anim_container = document.getElementById("animation_container");
+	dom_overlay_container = document.getElementById("dom_overlay_container");
+	var comp=AdobeAn.getComposition("F02C327DE1659545950DE5C88C99A168");
+	var lib=comp.getLibrary();
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
+	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
+	var lib=comp.getLibrary();
+	loader.loadManifest(lib.properties.manifest);
+}
+function handleFileLoad(evt, comp) {
+	var images=comp.getImages();	
+	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+}
+function handleComplete(evt,comp) {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	var lib=comp.getLibrary();
+	var ss=comp.getSpriteSheet();
+	var queue = evt.target;
+	var ssMetadata = lib.ssMetadata;
+	for(i=0; i<ssMetadata.length; i++) {
+		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
+	}
+	var preloaderDiv = document.getElementById("_preload_div_");
+	preloaderDiv.style.display = 'none';
+	canvas.style.display = 'block';
+	exportRoot = new lib.index();
+	stage = new lib.Stage(canvas);
+	stage.enableMouseOver();	
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		stage.addChild(exportRoot);
+		createjs.Ticker.framerate = lib.properties.fps;
+		createjs.Ticker.addEventListener("tick", stage);
+	}	    
+	//Code to support hidpi screens and responsive scaling.
+	AdobeAn.makeResponsive(true,'both',true,1,[canvas,preloaderDiv,anim_container,dom_overlay_container]);	
+	AdobeAn.compositionLoaded(lib.properties.id);
+	fnStartAnimation();
+}
+</script>
+<!-- write your code here -->
+</head>
+<body onload="init();" style="margin:0px;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:1024px; height:576px">
+		<canvas id="canvas" width="1024" height="576" style="position: absolute; display: none; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1024px; height:576px; position: absolute; left: 0px; top: 0px; display: none;">
+		</div>
+	</div>
+    <div id='_preload_div_' style='position:absolute; top:0; left:0; display: inline-block; height:576px; width: 1024px; text-align: center;'>	<span style='display: inline-block; height: 100%; vertical-align: middle;'></span>	<img src=images/_preloader.gif?1762420631574 style='vertical-align: middle; max-height: 100%'/></div>
+</body>
+</html>
